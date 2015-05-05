@@ -1,4 +1,4 @@
-package com.edonoxako.geophoto.app.fragments;
+package com.edonoxako.geophot.app.fragments;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -7,8 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import com.edonoxako.geophoto.app.R;
-import com.edonoxako.geophoto.app.model.GeoMeta;
+import com.edonoxako.geophot.app.R;
+import com.edonoxako.geophot.app.model.GeoMeta;
 
 /**
  * Created by EugeneM on 27.04.2015.

@@ -1,4 +1,4 @@
-package com.edonoxako.geophoto.app.controllers;
+package com.edonoxako.geophot.app.controllers;
 
 import android.app.Activity;
 

@@ -1,10 +1,10 @@
-package com.edonoxako.geophoto.app.controllers;
+package com.edonoxako.geophot.app.controllers;
 
 import android.app.Activity;
 import android.os.Bundle;
-import com.edonoxako.geophoto.app.R;
-import com.edonoxako.geophoto.app.fragments.DescriptionViewFragment;
-import com.edonoxako.geophoto.app.model.GeoMeta;
+import com.edonoxako.geophot.app.R;
+import com.edonoxako.geophot.app.fragments.DescriptionViewFragment;
+import com.edonoxako.geophot.app.model.GeoMeta;
 
 /**
  * Created by EugeneM on 27.04.2015.

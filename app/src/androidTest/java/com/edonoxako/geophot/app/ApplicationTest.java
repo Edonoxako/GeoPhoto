@@ -1,4 +1,4 @@
-package com.edonoxako.geophoto.app;
+package com.edonoxako.geophot.app;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

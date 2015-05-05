@@ -17,7 +17,7 @@ android {
     buildToolsVersion "22.0.1"
 
     defaultConfig {
-        applicationId "com.edonoxako.geophoto.app"
+        applicationId "com.edonoxako.geophot.app"
         minSdkVersion 14
         targetSdkVersion 22
         versionCode 1

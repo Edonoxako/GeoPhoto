@@ -1,4 +1,4 @@
-package com.edonoxako.geophoto.app.model;
+package com.edonoxako.geophot.app.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;

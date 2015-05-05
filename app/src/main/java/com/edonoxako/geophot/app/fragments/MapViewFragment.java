@@ -1,17 +1,15 @@
-package com.edonoxako.geophoto.app.fragments;
+package com.edonoxako.geophot.app.fragments;
 
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import com.edonoxako.geophoto.app.R;
-import com.edonoxako.geophoto.app.controllers.MapViewController;
-import com.edonoxako.geophoto.app.model.GeoMeta;
+import com.edonoxako.geophot.app.R;
+import com.edonoxako.geophot.app.controllers.MapViewController;
+import com.edonoxako.geophot.app.model.GeoMeta;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
