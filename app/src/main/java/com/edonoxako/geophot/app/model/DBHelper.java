@@ -30,6 +30,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        //—оздаЄм таблицу дл€ хранени€ информации о точках на карте
         db.execSQL("CREATE TABLE " + TABLE_NAME + " (" +
                 ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 LATITUDE + " REAL, " +
@@ -37,6 +38,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 TEXT + " TEXT, " +
                 IMAGE + " INTEGER, " +
                 LAST_VISITED + " TEXT);");
+
+        //TODO: —оздать таблицу дл€ хранени€ ссылок на изображени€, относ€щиес€ к точкам на карте
 
         Log.d(TAG, "DB created");
     }
@@ -46,11 +49,21 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 
+    //¬спомогательный метод, выводит содержани€ курсора в лог
     public static void readCursor(Cursor cursor) {
-        if (cursor != null) {
-            for (String name : cursor.getColumnNames()) {
-                Log.d(TAG, name);
-            }
+        if (cursor != null && cursor.moveToFirst()) {
+//            for (String name : cursor.getColumnNames()) {
+//                Log.d(TAG, name);
+//            }
+            do {
+                Log.d(TAG, "###########################");
+                Log.d(TAG, "ID: " + String.valueOf(cursor.getInt(cursor.getColumnIndex(ID))));
+                Log.d(TAG, "LONGITUDE: " + String.valueOf(cursor.getDouble(cursor.getColumnIndex(LONGITUDE))));
+                Log.d(TAG, "LATITUDE: " + String.valueOf(cursor.getDouble(cursor.getColumnIndex(LATITUDE))));
+                Log.d(TAG, "TEXT: " + String.valueOf(cursor.getString(cursor.getColumnIndex(TEXT))));
+                Log.d(TAG, "LAST: " + String.valueOf(cursor.getString(cursor.getColumnIndex(LAST_VISITED))));
+                Log.d(TAG, "###########################");
+            } while (cursor.moveToNext());
         } else {
             Log.d(TAG, "Cursor is empty");
         }

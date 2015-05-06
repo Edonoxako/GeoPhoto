@@ -21,13 +21,21 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        GeoData data = new GeoData(10, 15, "Привет", null, "18/06/1993");
-
         DAOGeoDB dao = new DAOGeoDB(this);
-        dao.insert(data);
-        List<GeoData> points = dao.read();
 
-        readData(points);
+        GeoData point1 = new GeoData(140.4, 51.6, "Wai wai", null, "01.12.1270");
+        GeoData point2 = new GeoData(760.1, 9.67, "LOL", null, "12.11.1861");
+
+//        dao.insert(point1);
+//        dao.insert(point2);
+        Log.d(TAG, "ALL");
+        readData(dao.read());
+
+        Log.d(TAG, "SINGLE");
+        GeoData data = dao.read(5);
+        readSingle(data);
+
+
 
         //Расскоментить для работы с представлениями
 //        getFragmentManager().beginTransaction()
@@ -37,12 +45,18 @@ public class MainActivity extends Activity {
 
     private void readData(List<GeoData> data) {
         for (GeoData d : data) {
-            Log.d(TAG, "------------------------------");
-            Log.d(TAG, "Longitude: " + d.getLongitude());
-            Log.d(TAG, "Latitude: " + d.getLattitude());
-            Log.d(TAG, "Text: " + d.getText());
-            Log.d(TAG, "LastVisited: " + d.getLastVisitedDate());
+            readSingle(d);
         }
+    }
+
+    private void readSingle(GeoData data) {
+        Log.d(TAG, "------------------------------");
+        Log.d(TAG, "ID: " + data.getId());
+        Log.d(TAG, "Longitude: " + data.getLongitude());
+        Log.d(TAG, "Latitude: " + data.getLattitude());
+        Log.d(TAG, "Text: " + data.getText());
+        Log.d(TAG, "LastVisited: " + data.getLastVisitedDate());
+        Log.d(TAG, "------------------------------");
     }
 
 }

@@ -13,12 +13,13 @@ import java.util.List;
  * Created by EugeneM on 05.05.2015.
  */
 public class DAOGeoDB {
-    //TODO: ƒопилить возможность удал€ть записи из таблицы, измен€ть их, также добавить возможность делать более точные запросы
+    //TODO: ƒобавить логику чтенни€ из таблицы с изображени€ми
     private DBHelper dbHelper;
 
     public DAOGeoDB(Context context) {
         dbHelper = new DBHelper(context);
     }
+
 
     //ћетод получает данные о точках из таблицы и упаковывает их в список точек
     public List<GeoData> read() {
@@ -27,29 +28,48 @@ public class DAOGeoDB {
         Cursor cursor = db.query(DBHelper.TABLE_NAME, null, null, null, null, null, null);
         ArrayList<GeoData> data = new ArrayList<GeoData>();
         if (cursor.moveToFirst()) {
-            while (cursor.moveToNext()) {
-                GeoData tmp = new GeoData();
-
-                tmp.setLattitude(cursor.getDouble(cursor.getColumnIndex(DBHelper.LATITUDE)));
-                tmp.setLongitude(cursor.getDouble(cursor.getColumnIndex(DBHelper.LONGITUDE)));
-                tmp.setLastVisitedDate(cursor.getString(cursor.getColumnIndex(DBHelper.LAST_VISITED)));
-                tmp.setText(cursor.getString(cursor.getColumnIndex(DBHelper.TEXT)));
-                tmp.setImages(getImages());
-
+            do {
+                GeoData tmp = packToPointDataObject(cursor);
                 data.add(tmp);
-            }
+            } while (cursor.moveToNext());
         }
 
         dbHelper.close();
         return data;
     }
 
-    //ћетод считывает все картинки, соответствующие определЄнной записи, из таблицы картинок
+    //ћетод дл€ получени€ конкретной точки по еЄ id
+    public GeoData read(int id) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        Cursor cursor = db.query(DBHelper.TABLE_NAME, null, "ID = ?", new String[] {String.valueOf(id)}, null, null, null);
+        DBHelper.readCursor(cursor);
+        GeoData data = null;
+        if (cursor.moveToFirst()) {
+            data = packToPointDataObject(cursor);
+        }
+
+        dbHelper.close();
+        return data;
+    }
+
+    //¬спомогательный метод, упаковывает строку из таблицы в объект, содержащий информацию о точке
+    private GeoData packToPointDataObject(Cursor cursor) {
+        GeoData tmp = new GeoData();
+        tmp.setId(cursor.getInt(cursor.getColumnIndex(DBHelper.ID)));
+        tmp.setLattitude(cursor.getDouble(cursor.getColumnIndex(DBHelper.LATITUDE)));
+        tmp.setLongitude(cursor.getDouble(cursor.getColumnIndex(DBHelper.LONGITUDE)));
+        tmp.setLastVisitedDate(cursor.getString(cursor.getColumnIndex(DBHelper.LAST_VISITED)));
+        tmp.setText(cursor.getString(cursor.getColumnIndex(DBHelper.TEXT)));
+        tmp.setImages(getImages());
+        return tmp;
+    }
+
+    //ћетод считывает все картинки, соответствующие определЄнной записи, из таблицы картинок(пока заглушка)
     private List<Bitmap> getImages() {
         return new ArrayList<Bitmap>();
     }
 
-    //ћетод добавл€ет новую запись в таблицу
+    //ћетод добавл€ет новую точку в таблицу
     public void insert(GeoData data) {
         ContentValues cv = new ContentValues();
         cv.put(DBHelper.LATITUDE, data.getLattitude());
@@ -60,6 +80,27 @@ public class DAOGeoDB {
 
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         db.insert(DBHelper.TABLE_NAME, null, cv);
+        dbHelper.close();
+    }
+
+    //”дал€ет запись о точке из базы данных
+    public void delete(GeoData data) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        db.delete(DBHelper.TABLE_NAME, "ID = ?", new String[]{String.valueOf(data.getId())});
+        dbHelper.close();
+    }
+
+    //»змен€ет информацию о точке в таблице
+    public void update(GeoData data) {
+        //TODO: ƒобавить изменение изображений
+        ContentValues cv = new ContentValues();
+        cv.put(DBHelper.LATITUDE, data.getLattitude());
+        cv.put(DBHelper.LONGITUDE, data.getLongitude());
+        cv.put(DBHelper.TEXT, data.getText());
+        cv.put(DBHelper.LAST_VISITED, data.getLastVisitedDate());
+
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        db.update(DBHelper.TABLE_NAME, cv, "ID = ?", new String[] {String.valueOf(data.getId())});
         dbHelper.close();
     }
 }

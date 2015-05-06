@@ -8,6 +8,7 @@ import java.util.List;
  * Created by EugeneM on 05.05.2015.
  */
 public class GeoData {
+    private int id;
     private double lattitude;
     private double longitude;
     private String text;
@@ -22,6 +23,14 @@ public class GeoData {
         text = txt;
         images = imgs;
         lastVisitedDate = lastVisited;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public double getLattitude() {
